@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title></title>
+</head>
+<body>
+  <style type="text/css">
+    body {
+      background: #333;
+      color: #ddd;
+      font-family: sans-serif;
+    }
+    .container {
+      background: white;
+      height: 100px; min-width: 600px; padding: 5px;
+      overflow: hidden;
+      border-radius: 2px;
+      margin: 50px;
+    }
+  </style>
+  <div class="container"></div>
+  <div id="messages"></div>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.1.7/underscore-min.js'></script>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.5.3/backbone-min.js'></script>
+  <script src="highstock.js"></script>
+  <script src="navigator.js"></script>
+</body>
+</html>
