@@ -1,7 +1,9 @@
+desc "Builds documentation"
 task :build do
   system "docco navigator.js"
 end
 
+desc "Uploads these things to sinefunc.com"
 task :deploy => :build do
   system "git update-ghpages sinefunc/sinefunc.github.com -b master -p _chartdemo"
 end

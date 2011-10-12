@@ -68,8 +68,8 @@ var ChartNavigator = Backbone.View.extend({
 
       this.chart.xAxis[0].setExtremes(
           +start, +end,
-          true /* redraw */, 
-          true /* animation */);
+          true  /* redraw */, 
+          false /* animation */);
     }
   },
 
@@ -157,7 +157,7 @@ var ChartNavigator = Backbone.View.extend({
     }
 
     // Ensure that something actually changed.
-    if ((last.start != this.start) || (last.end != this.end)) {
+    if ((+last.start != +this.start) || (+last.end != +this.end)) {
       this.trigger('change', this.start, this.end);
     }
   },
