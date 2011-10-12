@@ -11,6 +11,9 @@
       color: #ddd;
       font-family: sans-serif;
     }
+    a {
+      color: #ddd;
+    }
     .container {
       background: white;
       height: 100px; min-width: 600px; padding: 5px;
@@ -19,6 +22,7 @@
       margin: 50px;
     }
   </style>
+  Chart demo. <a href='docs/navigator.html'>Info</a>
   <div class="container"></div>
   <div id="messages"></div>
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
