@@ -28,20 +28,16 @@ var ChartNavigator = Backbone.View.extend({
   // The HighCharts.Chart instance. This will be populated on `render()`.
   chart: null,
 
-  // ### start [attribute]
-  // Start time as a `Date`.
+  // ### start/end [attribute]
+  // Start time as a `Date`.  To change these values, use `setStart()` /
+  // `setEnd()` / `setRange()`.
   start: null,
-
-  // ### end [attribute]
-  // End time as a `Date`.
   end: null,
 
-  // ### min [attribute]
-  // The minimum available data point.
+  // ### min/max [attribute]
+  // The minimum/maximum available data points. These are `Date` objects.
+  // These are automatically set when you provide data.
   min: null,
-
-  // ### max [attribute]
-  // The maximum available data point.
   max: null,
 
   // ### setStart() [method]

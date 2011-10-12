@@ -1,0 +1,7 @@
+task :build do
+  system "docco navigator.js"
+end
+
+task :deploy => :build do
+  system "git update-ghpages sinefunc/sinefunc.github.com -b master -p _chartdemo"
+end
