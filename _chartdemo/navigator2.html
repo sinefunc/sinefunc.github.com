@@ -26,7 +26,7 @@
 
     .container .chartarea {
       width:   100%;
-      outline: dotted 1px rgba(200, 20, 20, 0.2);
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
       height:  100%; }
 
     /*
@@ -50,17 +50,21 @@
       left:          -15px; }
 
     .container .line {
-      border-left: solid 2px transparent;
-      border-color: rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
       height: 100%;
-      width: 2px; }
+      width: 3px; }
 
     /* Hovers */
     .container .slider:hover .handle {
       background: #358; }
 
-    .container .slider:hover .line {
-      border-color: rgba(0, 50, 120, 0.3); }
+    .container .slider.start .line {
+      position: relative;
+      left: -3px; }
+
+    .container .slider.end .line {
+      position: relative;
+      left: 1px; }
 
     /*
      * Selection
@@ -68,11 +72,13 @@
 
     .container .selection {
       cursor:     ew-resize;
+      box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+      border-radius: 2px;
       z-index:    1;
       position:   absolute;
       background: rgba(50, 100, 200, 0.2);
-      top:        2px;
-      bottom:     2px; }
+      top:        5px;
+      bottom:     5px; }
 
   </style>
   <center>Chart using Raphael. <a href='docs/navigator2.html'>View source</a></center>

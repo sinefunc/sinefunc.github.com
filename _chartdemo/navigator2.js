@@ -369,7 +369,7 @@ $(function() {
     var start = +new Date - (30 * 86400 * 1000);
     var data  = [];
     var last  = 50;
-    var int   = (1000 * 86400 / 12);
+    var int   = (1000 * 86400 / 24);
 
     for (i=0; i<350; i++) {
       last += Math.random() * 20 - 10;
