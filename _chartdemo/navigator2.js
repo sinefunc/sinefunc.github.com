@@ -2,9 +2,11 @@
 // Yes.
 //
 // Events:
+//
 //  * `change` - When selection is changed
 //
 // Options:
+//
 //  * `data` - List of tuples
 //  * `verticalPadding` - Padding (default 10)
 
@@ -41,15 +43,19 @@ var ChartNavigator = Backbone.View.extend({
     end: null
   },
 
+  // ### $start
   // Start slider element
   $start: null,
 
+  // ### $end
   // End slider element
   $end: null,
 
+  // ### $selection
   // Selection range element
   $selection: null,
 
+  // ### $area
   // Chart area element
   $area: null,
 
@@ -62,6 +68,7 @@ var ChartNavigator = Backbone.View.extend({
     'dragend .slider':   'onSliderDragEnd',
   },
 
+  // ### HTML template
   template: _.template(
     "<div class='chartarea' id='<%= this.chartID %>'></div>" + 
     "<div class='start slider'>" +
@@ -75,18 +82,26 @@ var ChartNavigator = Backbone.View.extend({
     "<div class='selection'></div>"
   ),
 
+  colors:
+    ["#3491bf", "#9ec529", "#f2dfc6", "#a2c0cd", "#c9266c"],
+
+  // ### Constructor
   initialize: function() {
     this._initRanges();
+
+    // Initialize some default options.
     this.options.verticalPadding = this.options.verticalPadding || 10;
     this.options.minRange = this.options.minRange || 60 * 15 * 1000;
     this.chartID = "_" + Math.floor(Math.random() * 1000000000);
+
+    this.render();
 
     _.bindAll(this,
         'onChartClick', 'onSliderDrag', 'onSliderDragEnd', 'onStartSliderDrag', 'onEndSliderDrag');
   },
 
   render: function() {
-    var data = this.options.data;
+    var data = this.options.data[0];
 
     // Draw the chrome.
     var html = this.template(this);
@@ -121,6 +136,7 @@ var ChartNavigator = Backbone.View.extend({
   //
   // You may pass a `{ minRange: 100000 }` to specify the number of seconds. This overrides
   // the `minRange` option.
+  //
   setSelection: function(start, end, options) {
     if (!options) options = {};
     if (!options.minRange) options.minRange = this.options.minRange;
@@ -226,6 +242,9 @@ var ChartNavigator = Backbone.View.extend({
   // ### timeToX(time)
   // Converts given `time` to an x attribute.
   // X attribute refers to the X of the entire area, not just the chart area.
+  //
+  // Returns the X coordinate as a number.
+  //
   timeToX: function(time) {
     var left = this.$area.position().left;
     var x    = (+time - this.timeRange.min) * this.$area.width() / this.timeRange.range;
@@ -234,8 +253,12 @@ var ChartNavigator = Backbone.View.extend({
     return x;
   },
 
-  // Gets timestamp from X attribute.
+  // ### xToTime(x)
+  // Gets timestamp from `x` attribute.
   // X attribute refers to the X of the entire area, not just the chart area.
+  //
+  // Returns a Date object.
+  //
   xToTime: function(x) {
     var left = this.$area.position().left;
     var time = (x - left) * this.timeRange.range / this.$area.width() + this.timeRange.min;
@@ -246,12 +269,14 @@ var ChartNavigator = Backbone.View.extend({
     return new Date(time);
   },
 
+  // ### _initRanges()
   // Determines the maximum/minimums of data.
   _initRanges: function() {
-    var data   = this.options.data,
-        times  = _.map(data, function(tuple) { return +tuple[0]; }),
-        points = _.map(data, function(tuple) { return +tuple[1]; }),
-        length = points.length;
+    // Combine all serieses to one megaseries.
+    var data = _.inject(this.options.data, function(a, b) { return a.concat(b); });
+
+    var times  = _.map(data, function(tuple) { return +tuple[0]; }),
+        points = _.map(data, function(tuple) { return +tuple[1]; });
 
     var timeRange = {
       max: Math.max.apply(this, times),
@@ -272,18 +297,25 @@ var ChartNavigator = Backbone.View.extend({
 
   // Draws the chart.
   _initChart: function(sel) {
-    var w = $(this.el).width(),
-        h = $(this.el).height();
+    var w    = $(this.el).width(),
+        h    = $(this.el).height(),
+        self = this;
 
     this.paper = Raphael(this.chartID, w, h);
 
-    var pd1 = this._getGraphData(this.options.data, w, h, 0);
-    var pd2 = this._getGraphData(this.options.data, w, h);
+    _.each(this.options.data, function(data, i) {
+      var pd1 = self._getGraphData(data, w, h, 0);
+      var pd2 = self._getGraphData(data, w, h);
 
-    var path = this.paper.path(pd1).
-      attr({ 'stroke': '#378', 'stroke-width': 2 });
+      var path = self.paper.path(pd1).
+        attr({ 'stroke': self._getColor(i), 'stroke-width': 2 });
 
-    path.animate({ path: pd2 }, 500, '<>');
+      path.animate({ path: pd2 }, 500, '<>');
+    });
+  },
+
+  _getColor: function(i) {
+    return this.colors[i % this.colors.length];
   },
 
   _getGraphData: function(data, w, h, scale) {
@@ -334,7 +366,7 @@ $(function() {
     var last  = 50;
     var int   = (1000 * 86400 / 12);
 
-    for (i=0; i<800; i++) {
+    for (i=0; i<350; i++) {
       last += Math.random() * 20 - 10;
       data.push([ (start + i*int), last ]);
     }
@@ -342,21 +374,16 @@ $(function() {
     return data;
   };
 
-  var data = junkData();
-
+  // ### Instanciating
+  // Let's instanciate the chart navigator and render it.
   var chart = new ChartNavigator({
     el:       $('.container'),
-    data:     data,
-    minRange: 3600 * 1 * 1000
+    data:     [ junkData(), junkData() ]
   });
-
-  window.chart = chart;
 
   chart.bind('change', function(start, end) {
     log("Changed: " + start + " to " + end);
   });
-
-  chart.render();
 });
 
 function log(str) {
