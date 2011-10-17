@@ -318,6 +318,11 @@ var ChartNavigator = Backbone.View.extend({
     return this.colors[i % this.colors.length];
   },
 
+  // ### _getGraphData(tuples, width, height, [scale])
+  // Converts a data stream (`tuples`) into an SVG path string.
+  //
+  // TODO: antialiasing of large data sets.
+  //
   _getGraphData: function(data, w, h, scale) {
     var scale      = (scale == undefined) ? 1.0 : scale,
         timeRange  = this.timeRange,

@@ -235,9 +235,11 @@ X attribute refers to the X of the entire area, not just the chart area.</p>
 
   <span class="nx">_getColor</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">colors</span><span class="p">[</span><span class="nx">i</span> <span class="o">%</span> <span class="k">this</span><span class="p">.</span><span class="nx">colors</span><span class="p">.</span><span class="nx">length</span><span class="p">];</span>
-  <span class="p">},</span>
+  <span class="p">},</span></pre></div>             </td>           </tr>                               <tr id="section-35">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-35">&#182;</a>               </div>               <h3>_getGraphData(tuples, width, height, [scale])</h3>
 
-  <span class="nx">_getGraphData</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">w</span><span class="p">,</span> <span class="nx">h</span><span class="p">,</span> <span class="nx">scale</span><span class="p">)</span> <span class="p">{</span>
+<p>Converts a data stream (<code>tuples</code>) into an SVG path string.</p>
+
+<p>TODO: antialiasing of large data sets.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">_getGraphData</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">w</span><span class="p">,</span> <span class="nx">h</span><span class="p">,</span> <span class="nx">scale</span><span class="p">)</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">scale</span>      <span class="o">=</span> <span class="p">(</span><span class="nx">scale</span> <span class="o">==</span> <span class="kc">undefined</span><span class="p">)</span> <span class="o">?</span> <span class="mf">1.0</span> <span class="o">:</span> <span class="nx">scale</span><span class="p">,</span>
         <span class="nx">timeRange</span>  <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">timeRange</span><span class="p">,</span>
         <span class="nx">pointRange</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">pointRange</span><span class="p">,</span>
@@ -263,7 +265,7 @@ X attribute refers to the X of the entire area, not just the chart area.</p>
 
     <span class="k">return</span> <span class="nx">re</span><span class="p">;</span>
   <span class="p">}</span>
-<span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-35">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-35">&#182;</a>               </div>               <h1>Usage example</h1>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-36">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-36">&#182;</a>               </div>               <p>Build some garbage data.
+<span class="p">});</span></pre></div>             </td>           </tr>                               <tr id="section-36">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-36">&#182;</a>               </div>               <h1>Usage example</h1>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-37">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-37">&#182;</a>               </div>               <p>Build some garbage data.
 This generates an array of tuples of <code>[ date, number ]</code>. Date is in UNIX time. It looks like:</p>
 
 <pre><code>[
@@ -284,7 +286,7 @@ This generates an array of tuples of <code>[ date, number ]</code>. Date is in U
     <span class="p">}</span>
 
     <span class="k">return</span> <span class="nx">data</span><span class="p">;</span>
-  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-37">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-37">&#182;</a>               </div>               <h3>Instanciating</h3>
+  <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-38">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-38">&#182;</a>               </div>               <h3>Instanciating</h3>
 
 <p>Let's instanciate the chart navigator and render it.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">chart</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ChartNavigator</span><span class="p">({</span>
     <span class="nx">el</span><span class="o">:</span>       <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.container&#39;</span><span class="p">),</span>
