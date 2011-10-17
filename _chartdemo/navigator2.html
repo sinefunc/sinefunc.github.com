@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title></title>
+</head>
+<body>
+  <style type="text/css">
+    body {
+      overflow-y: scroll; }
+
+    body {
+      background:  #aaa;
+      color:       #ddd;
+      font-family: sans-serif; }
+
+    a {
+      color: #ddd; }
+
+    .container {
+      background:    white;
+      height:        100px; min-width: 600px; padding: 5px;
+      position:      relative;
+      border-radius: 2px;
+      margin:        50px; }
+
+    .container .chartarea {
+      width:   100%;
+      outline: dotted 1px rgba(200, 20, 20, 0.2);
+      height:  100%; }
+
+    /*
+     * Slider
+     */
+    .container .slider {
+      z-index:  2;
+      height:   100%;
+      position: absolute;
+      top:      0; }
+               
+    .container .handle {
+      cursor:        ew-resize;
+      width:         30px;
+      height:        20px;
+      background:    #222;
+      border-radius: 4px;
+      display:       block;
+      position:      absolute;
+      bottom:        -10px;
+      left:          -15px; }
+
+    .container .line {
+      border-left: solid 2px transparent;
+      border-color: rgba(0, 0, 0, 0.3);
+      height: 100%;
+      width: 2px; }
+
+    /* Hovers */
+    .container .slider:hover .handle {
+      background: #358; }
+
+    .container .slider:hover .line {
+      border-color: rgba(0, 50, 120, 0.3); }
+
+    /*
+     * Selection
+     */
+
+    .container .selection {
+      cursor:     ew-resize;
+      z-index:    1;
+      position:   absolute;
+      background: rgba(50, 100, 200, 0.2);
+      top:        2px;
+      bottom:     2px; }
+
+  </style>
+  <div class="container"></div>
+  <div id="messages"></div>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.1.7/underscore-min.js'></script>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.5.3/backbone-min.js'></script>
+  <script src='raphael.js'></script>
+  <script src="jquery.drag.js"></script>
+  <script src="navigator2.js"></script>
+</body>
+</html>

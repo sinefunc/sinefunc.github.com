@@ -1,6 +1,7 @@
 desc "Builds documentation"
 task :build do
   system "docco navigator.js"
+  system "docco navigator2.js"
 end
 
 desc "Uploads these things to sinefunc.com"
