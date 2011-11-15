@@ -156,7 +156,7 @@ Hyperchart.Bar = Hyperchart.extend({
         .data(data, function(d) { return d[0]; });
 
       function getHeight(idx) {
-        return function(d, i) { return barsY(d[idx]) - opts.paddingTop; };
+        return function(d, i) { return barsY(d[idx]) - opts.paddingTop + 4; };
       };
 
       function getY(idx) {
@@ -173,6 +173,8 @@ Hyperchart.Bar = Hyperchart.extend({
           .attr('height', getHeight(idx))
           .attr('y', getY(idx))
           .attr('x', function(d,i) { return barsX(d[0]) + bandWidth; })
+          .attr('rx', 1)
+          .attr('ry', 1)
           //.attr('y', dims.height + dims.top);
 
       bars.transition()

@@ -8,12 +8,12 @@ function junkData() {
   return re;
 }
 
-var total = 2;
-while (total--) { spawn(); }
+spawn('atlantis');
+spawn('bamboo');
 
-function spawn() {
+function spawn(theme) {
 // Spawn an element.
-var chart = new Hyperchart.Bar($("<div class='chart'>").appendTo("body"), {
+var chart = new Hyperchart.Bar($("<div class='chart "+theme+"'>").appendTo("body"), {
   stacked: true,
   metrics: ['CPU', 'Writes', 'Reads', 'Network', 'Locks']
 });
