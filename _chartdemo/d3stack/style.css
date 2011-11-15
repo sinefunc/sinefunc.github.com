@@ -1,0 +1,25 @@
+div.chart {
+  width: 1100px; height: 400px; border: solid 2px #ddd;
+  overflow: hidden;
+  margin: 10px;
+  float: left;
+}
+
+.hyperchart .bar {
+   fill: steelblue;
+}
+
+.hyperchart .bar.series-1 { fill: #99aa66; }
+.hyperchart .bar.series-2 { fill: #1383d2; }
+.hyperchart .bar.series-3 { fill: #ee8449; }
+.hyperchart .bar.series-4 { fill: #637476; }
+.hyperchart .bar.series-5 { fill: #bb9e6f; }
+
+.hyperchart text {
+  font-family: helvetica, sans-serif;
+  font-size: 8pt;
+  color: #ddd;
+}
+
+.hyperchart .legend.value {
+  font-size: 16pt; }
