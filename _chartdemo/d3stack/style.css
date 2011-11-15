@@ -5,10 +5,8 @@ div.chart {
   float: left;
 }
 
-.hyperchart .bar {
-   fill: steelblue;
-}
-
+.hyperchart .bar { fill: steelblue; }
+.hyperchart .bar { shape-rendering: optimizeSpeed; }
 .hyperchart .bar.series-1 { fill: #99aa66; }
 .hyperchart .bar.series-2 { fill: #1383d2; }
 .hyperchart .bar.series-3 { fill: #ee8449; }
@@ -16,6 +14,7 @@ div.chart {
 .hyperchart .bar.series-5 { fill: #bb9e6f; }
 
 .hyperchart text {
+  text-rendering: optimizeLegibility;
   font-family: helvetica, sans-serif;
   font-size: 8pt;
   color: #ddd;
