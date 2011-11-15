@@ -59,6 +59,8 @@ var ChartNavigator = Backbone.View.extend({
   // Chart area element
   $area: null,
 
+  $rangeDisplay: null,
+
   events: {
     //'click svg': 'onChartClick',
     'dragstart .end.slider':   'onEndSliderDrag',
@@ -79,7 +81,9 @@ var ChartNavigator = Backbone.View.extend({
       "<div class='line'></div>" +
       "<div class='handle'></div>" +
     "</div>" +
-    "<div class='selection'></div>"
+    "<div class='selection'>"+
+      "<div class='range-display'></div>" +
+    "</div>"
   ),
 
   colors:
@@ -111,10 +115,11 @@ var ChartNavigator = Backbone.View.extend({
     this._initChart("#"+this.chartID);
 
     // Initialize element shortcuts.
-    this.$start     = $(this.el).find('.start.slider');
-    this.$end       = $(this.el).find('.end.slider');
-    this.$selection = $(this.el).find('.selection');
-    this.$area      = $(this.el).find('.chartarea');
+    this.$start        = $(this.el).find('.start.slider');
+    this.$end          = $(this.el).find('.end.slider');
+    this.$selection    = $(this.el).find('.selection');
+    this.$area         = $(this.el).find('.chartarea');
+    this.$rangeDisplay = $(this.el).find('.range-display');
 
     // Set default selection.
     this.setSelection(
@@ -178,6 +183,21 @@ var ChartNavigator = Backbone.View.extend({
     if (!options.silent) { this._triggerChange(); }
   },
 
+  _updateRangeDisplay: function() {
+    var html = '';
+    
+    var start = this.selection.start.toString();
+    var end = this.selection.end.toString();
+    var r = this.selection.end - this.selection.start;
+
+    html += "" + parseInt(r/(3600*1000)) + " hours";
+
+    html = "<span>"+html+"</span>";
+
+    this.$rangeDisplay.html(html);
+
+  },
+
   _triggerChange: function() {
     var dates = this.selection;
     return this.trigger('change', dates.start, dates.end);
@@ -219,22 +239,32 @@ var ChartNavigator = Backbone.View.extend({
     // Convert the time, the set selection.
     var d = this.xToTime(x);
     fn.apply(this, [d, { silent: true, animating: true }]);
+
+    // Update the indicator.
+    this._updateRangeDisplay();
   },
 
   onStartSliderDrag: function(e) {
+    this.$rangeDisplay.html('').show();
+    $(e.target).closest('.slider').addClass('dragging');
+
     return this.onSliderDrag(e,
       this.$start,
       this.setSelectionStart);
   },
 
   onEndSliderDrag: function(e) {
+    this.$rangeDisplay.html('').show();
+    $(e.target).closest('.slider').addClass('dragging');
+
     return this.onSliderDrag(e,
       this.$end,
       this.setSelectionEnd);
   },
 
-
   onSliderDragEnd: function(e) {
+    $(this.el).find('.dragging').removeClass('dragging');
+    this.$rangeDisplay.fadeOut();
     this._lastX = null;
     this._triggerChange();
   },
@@ -369,7 +399,7 @@ $(function() {
     var start = +new Date - (30 * 86400 * 1000);
     var data  = [];
     var last  = 50;
-    var int   = (1000 * 86400 / 24);
+    var int   = (1000 * 86400 / 24 * 0.4);
 
     for (i=0; i<350; i++) {
       last += Math.random() * 20 - 10;
@@ -389,6 +419,8 @@ $(function() {
   chart.bind('change', function(start, end) {
     log("Changed: " + start + " to " + end);
   });
+
+  window.chart = chart;
 });
 
 function log(str) {
